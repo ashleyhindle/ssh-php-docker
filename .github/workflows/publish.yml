@@ -38,7 +38,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: sammyjo20/ssh-php
+          images: ashleyhindle/ssh-php
 
       - name: Build and push
         uses: docker/build-push-action@v6
