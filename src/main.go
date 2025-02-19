@@ -1,10 +1,11 @@
 package main
 
 import (
-	"context"
+    "context"
     "errors"
     "fmt"
     "io"
+    "net"
     "os"
     "os/exec"
     "os/signal"
@@ -34,8 +35,9 @@ func main() {
             func(h ssh.Handler) ssh.Handler {
                 return func(s ssh.Session) {
                     ptyReq, winCh, isPty := s.Pty()
+		    addr, _ := s.RemoteAddr().(*net.TCPAddr)
 
-                    cmd := exec.Command("php", "/home/server/index.php", s.RemoteAddr())
+                    cmd := exec.Command("php", "/home/server/index.php", addr.IP.String())
 
                     if isPty {
                         cmd.Env = append(cmd.Env, fmt.Sprintf("TERM=%s", ptyReq.Term))
